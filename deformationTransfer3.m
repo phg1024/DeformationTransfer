@@ -42,7 +42,7 @@ c = cell2mat(S);
 fprintf('assembling matrix A...\n');
 A = spalloc(nfaces*3, nverts, 27*nfaces);
 ttotal = 0;
-tic; tic;
+tassemble = tic; tic;
 for i=1:nfaces
     if mod(i,10000) == 0
         tstep = toc;
@@ -57,19 +57,18 @@ for i=1:nfaces
         A(rowoffset:rowoffset+2, verts(j)) = Af(:,j);
     end
 end
-toc;
 fprintf('done.\n');
-ttotal = ttotal + toc;
+ttotal = toc(tassemble);
 fprintf('matrix A assembled in %f seconds\n', ttotal);
 
 % now solve for \tilde{v} = (\tilde v_0, \tilde v_1, \tilde v_2, \tilde v_3)
-fprintf('post processing matrix A...\n');
+fprintf('post processing matrix A... ');
 A = sparse(A);
 AtD = bsxfun(@times, A', Ds');
 fprintf('done.\n');
-fprintf('solving least square problem ...\n');
+fprintf('solving least square problem ... ');
 tic; x = (AtD*A)\(AtD*c); tsolve = toc;
-fprintf('solved in %f seconds.\n', tsolve);
+fprintf('finished in %f seconds.\n', tsolve);
 Td.vertices = x;
 end
 

@@ -8,7 +8,7 @@ if ~aligned
 else
     FV.vertices = mesh.vertices;
 end
-FV.faces = mesh.objects.data.vertices;
+FV.faces = mesh.faces;
 patch(FV, 'facecolor', [0.75 0.75 0.75], 'edgecolor', 'none', 'vertexnormalsmode', 'auto', 'facealpha', 0.5);
 
 if ~aligned
@@ -18,7 +18,7 @@ if ~aligned
 else
     FV.vertices = ref.vertices;
 end
-FV.faces = ref.objects.data.vertices;
+FV.faces = ref.faces;
 patch(FV, 'facecolor', [0.5 0.5 0.75], 'edgecolor', 'none', 'vertexnormalsmode', 'auto', 'facealpha', 0.5);
 hold on;
 camlight;

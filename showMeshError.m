@@ -1,6 +1,6 @@
 function showMeshError(mesh, ref, name)
 FV.vertices = mesh.vertices;
-FV.faces = mesh.objects.data.vertices;
+FV.faces = mesh.faces;
 nverts = size(FV.vertices, 1);
 colors = zeros(nverts, 3);
 dists = zeros(nverts, 1);
