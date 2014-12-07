@@ -10,7 +10,6 @@ Td = T0;
 nfaces = size(S0.faces, 1);
 nverts = size(S0.vertices, 1);
 
-% the 
 S = cell(nfaces, 1);
 T = cell(nfaces, 1);
 Ds = zeros(3*nfaces, 1);   % triangle areas
@@ -45,7 +44,7 @@ A = spalloc(nfaces*3, nverts, 27*nfaces);
 ttotal = 0;
 tic; tic;
 for i=1:nfaces
-    if mod(i,1000) == 0
+    if mod(i,10000) == 0
         tstep = toc;
         ttotal = ttotal + tstep;
         fprintf('processed %d faces in %f seconds\n', i, ttotal);        
@@ -66,7 +65,6 @@ fprintf('matrix A assembled in %f seconds\n', ttotal);
 % now solve for \tilde{v} = (\tilde v_0, \tilde v_1, \tilde v_2, \tilde v_3)
 fprintf('post processing matrix A...\n');
 A = sparse(A);
-spy(A);
 AtD = bsxfun(@times, A', Ds');
 fprintf('done.\n');
 fprintf('solving least square problem ...\n');
