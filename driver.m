@@ -9,10 +9,8 @@ S1_path = 'C:\Users\Peihong\Desktop\Data\FaceWarehouse_Data_0\Tester_1\Blendshap
 T0_path = 'C:\Users\Peihong\Desktop\Data\FaceWarehouse_Data_0\Tester_106\Blendshape\shape_0.obj';
 T1_path = 'C:\Users\Peihong\Desktop\Data\FaceWarehouse_Data_0\Tester_106\Blendshape\shape_22.obj';
 else    
-%S0_path = 'horse-poses/horse-01.obj';
-%S1_path = 'horse-poses/horse-03.obj';
-S0_path = 'cube.obj';
-S1_path = 'cube1.obj';
+S0_path = 'horse-poses/horse-01.obj';
+S1_path = 'horse-poses/horse-03.obj';
 T0_path = S0_path;
 T1_path = S1_path;
 end

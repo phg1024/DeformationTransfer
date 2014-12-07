@@ -183,7 +183,7 @@ while 1
         switch s
             case 'f' % faces
                 Lyn=strtrim(Lyn(3:l));
-                nvrts=length(findstr(Lyn,' '))+1;
+                nvrts=length(regexp(Lyn, '\s+'))+1;
                 fstr=findstr(Lyn,'/');
                 nslash=length(fstr);
                 if nvrts == 3
@@ -191,9 +191,19 @@ while 1
                     if nslash ==3 % vertex and textures
                         f1=sscanf(Lyn,'%f/%f');
                         f1=f1([1 3 5 2 4 6 1 3 5]);
-                    elseif nslash==6 % vertex, textures and normals,
-                        f1=sscanf(Lyn,'%f/%f/%f');
-                        f1=f1([1 4 7 2 5 8 3 6 9]);
+                    elseif nslash==6 % vertex, textures and normals,                        
+                        nnums = length(regexp(Lyn, '\d+'));
+                        if nnums == 9
+                            f1=sscanf(Lyn,'%f/%f/%f');
+                            f1=f1([1 4 7 2 5 8 3 6 9]);
+                        else
+                            if isempty(regexp(Lyn, '\d+/\d+/', 'once'))
+                                f1=sscanf(Lyn, '%f//%f');
+                            else
+                                f1=sscanf(Lyn, '%f/%f/');
+                            end
+                            f1=[f1([1 3 5 2 4 6]); 0; 0; 0];
+                        end                        
                     elseif nslash==0
                         f1=sscanf(Lyn,'%f');
                         f1=f1([1 2 3 1 2 3 1 2 3]);
@@ -306,8 +316,11 @@ while 1
     vnum=vnum - 1;
     f3num=f3num - 1;
     f4num=f4num - 1;
-    vtnum=vtnum - 1;
-    vnnum=vnnum - 1;
+    
+    % ignore all normal and textures
+    vtnum = 0; vnnum = 0;
+    %vtnum=vtnum - 1;
+    %vnnum=vnnum - 1;
 
     if debug > 0
         fprintf('\n\nNew Submesh %i [%s] of file %s contains:\n', meshcount + 1, subMeshName, modelname);
@@ -495,11 +508,15 @@ while 1
         objobject{meshcount}.quadfaces = QuadFaces(:, 1:f4num);  %#ok<AGROW>
     end;
     objobject{meshcount}.vertices = Vertices(:, 1:vnum);  %#ok<AGROW>
+    
+    if 0
+        % remove all these properties
     objobject{meshcount}.normals = Normals(:, 1:vnnum);  %#ok<AGROW>
     objobject{meshcount}.texcoords = Texcoords(:, 1:vnum);  %#ok<AGROW>
-    objobject{meshcount}.subMeshName = subMeshName;  %#ok<AGROW>
+    objobject{meshcount}.subMeshName = subMeshName;  %#ok<AGROW>    
     objobject{meshcount}.mtllib = mtllib;  %#ok<AGROW>
     objobject{meshcount}.usemtl = usemtlstack;  %#ok<AGROW>
+    end
     
     if debug>0
         fprintf('----------------------------------------------------------\n');
