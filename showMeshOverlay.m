@@ -9,7 +9,7 @@ else
     FV.vertices = mesh.vertices;
 end
 FV.faces = mesh.faces;
-patch(FV, 'facecolor', [0.75 0.75 0.75], 'edgecolor', 'none', 'vertexnormalsmode', 'auto', 'facealpha', 0.5);
+patch(FV, 'facecolor', [0.5 0.5 0.95], 'edgecolor', 'none', 'vertexnormalsmode', 'auto', 'facealpha', 0.5);
 
 if ~aligned
     center2 = mean(ref.vertices);
@@ -19,7 +19,7 @@ else
     FV.vertices = ref.vertices;
 end
 FV.faces = ref.faces;
-patch(FV, 'facecolor', [0.5 0.5 0.75], 'edgecolor', 'none', 'vertexnormalsmode', 'auto', 'facealpha', 0.5);
+patch(FV, 'facecolor', [0.95 0.5 0.5], 'edgecolor', 'none', 'vertexnormalsmode', 'auto', 'facealpha', 0.5);
 hold on;
 camlight;
 lighting gouraud;
