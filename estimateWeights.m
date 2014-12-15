@@ -1,8 +1,8 @@
-function w = estimateWeights(S, B0, dB, w0, maxiters, vis)
-if nargin < 5
+function w = estimateWeights(S, B0, dB, w0, w_prior, w_alpha, maxiters, vis)
+if nargin < 7
     maxiters = 128;
 end
-if nargin < 6
+if nargin < 8
     vis = false;
 end
 
@@ -19,13 +19,13 @@ end
 nverts = size(B0.vertices, 1);
 
 % measurement vector
-meas = zeros(1, nverts);
+meas = zeros(1, nverts+1);
 
 % solve for optimal weights
-options=[1e-4, 1E-12, 1E-12, 1E-12, 1E-06];
+options=[1e-3, 1E-12, 1E-12, 1E-12, 1E-06];
 for i=1:maxiters
     %[ret, popt, info] = levmar('cost_weights', 'jac_weights', w, meas, 5, options, 'unc', S, B0, dB);
-    [ret, popt, info] = levmar('cost_weights', 'jac_weights', w, meas, 8, options, 'bc', zeros(1, nshapes), ones(1, nshapes), S, B0, dB);
+    [ret, popt, info] = levmar('cost_weights', 'jac_weights', w, meas, 6, options, 'bc', zeros(1, nshapes), ones(1, nshapes), S, B0, dB, w_prior, w_alpha);
 w = popt;
 end
 fprintf('finished in %d iterations ...\n', ret);
